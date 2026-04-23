@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mb-5">
+    <h2 class="font-weight-bold">Face Templates</h2>
+    <p class="text-muted">Captured datasets for registration number: <span class="text-primary font-weight-bold">{{ reg_no }}</span></p>
+</div>
+
+<div class="card p-5">
+    <div class="row row-cols-2 row-cols-md-5 g-4">
+        {% for i in range(1, 11) %}
+        <div class="col mb-4">
+            <div class="card h-100 shadow-sm border-0 bg-light overflow-hidden">
+                <img src="{{ url_for('static', filename='face_data/' + reg_no + '/face_' + i|string + '.jpg') }}" class="card-img-top" alt="Face {{ i }}" onerror="this.src='https://placehold.co/150x150/f1f5f9/94a3b8?text=Face+{{ i }}'">
+                <div class="card-body p-2 text-center">
+                    <span class="small font-weight-bold text-muted">TEMPLATE_{{ i }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="text-center mt-5">
+        <p class="text-muted small mb-4"><i class="fas fa-info-circle mr-1"></i> These templates will be used for training the recognition model.</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{{ url_for('add_face', reg_no=reg_no) }}" class="btn btn-outline-primary btn-lg px-5 mr-3 shadow-sm">
+                <i class="fas fa-redo mr-2"></i> Recapture All
+            </a>
+            <a href="{{ url_for('preprocess', reg_no=reg_no) }}" class="btn btn-primary btn-lg px-5 shadow">
+                Start Model Training <i class="fas fa-microchip ml-2"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

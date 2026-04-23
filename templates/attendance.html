@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mb-5">
+    <h2 class="font-weight-bold">Attendance Records</h2>
+    <p class="text-muted">Monitor student entry logs and authentication status.</p>
+</div>
+
+<div class="card p-4 mb-5 shadow-sm border-0">
+    <form method="POST" class="row align-items-center">
+        <div class="col-md-9">
+            <div class="form-group mb-0">
+                <label class="small font-weight-bold text-uppercase text-muted mb-2 d-block">Filter by Student</label>
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-white border-right-0 text-primary">
+                            <i class="fas fa-filter"></i>
+                        </span>
+                    </div>
+                    <select name="reg_no" class="form-control bg-white border-left-0 font-weight-medium">
+                        <option value="" selected>-- All Registered Students --</option>
+                        {% for student in students %}
+                        <option value="{{ student[0] }}">{{ student[1] }} ({{ student[0] }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div style="height: 29px;" class="d-none d-md-block"></div> <!-- Spacer for label height alignment -->
+            <button type="submit" class="btn btn-primary btn-lg btn-block shadow-sm">
+                <i class="fas fa-search mr-2"></i> Update View
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="table-container shadow-lg">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h5 class="font-weight-bold mb-0 text-primary"><i class="fas fa-list-ul mr-2"></i>Recent Activity</h5>
+        <a href="{{ url_for('export_attendance') }}" class="btn btn-outline-secondary btn-sm px-3"><i class="fas fa-file-export mr-1"></i> Export</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th class="border-top-0">Reg No</th>
+                    <th class="border-top-0">Student Name</th>
+                    <th class="border-top-0 text-center">Date</th>
+                    <th class="border-top-0 text-center">Time</th>
+                    <th class="border-top-0 text-center">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td class="font-weight-bold text-primary">{{ record[1] }}</td>
+                    <td class="font-weight-medium">{{ record[2] }}</td>
+                    <td class="text-center">{{ record[3] }}</td>
+                    <td class="text-center text-muted">{{ record[4] }}</td>
+                    <td class="text-center">
+                        <span class="badge {% if record[5] == 'Present' %}badge-present{% else %}badge-absent{% endif %} px-3 py-2">
+                            <i class="fas fa-check-circle mr-1"></i> {{ record[5] }}
+                        </span>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center py-5 text-muted">
+                        <i class="fas fa-folder-open fa-3x mb-3 d-block opacity-25"></i>
+                        No records found for the current filter.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

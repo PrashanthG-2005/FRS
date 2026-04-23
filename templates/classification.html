@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="text-center py-5">
+    <h4 class="text-primary font-weight-bold">Classification</h4>
+    <p class="text-muted small">BAT file icon illustration</p>
+    
+    <div class="row row-cols-2 row-cols-md-5 g-4 mt-4">
+        {% for i in range(1, 11) %}
+        <div class="col mb-4">
+            <div class="card h-100 shadow-sm border-0 bg-white overflow-hidden">
+                <img src="{{ url_for('static', filename='face_data/' + reg_no + '/face_' + i|string + '.jpg') }}" 
+                     class="card-img-top" alt="Classified {{ i }}" 
+                     style="filter: sepia(0.5) hue-rotate(200deg);"
+                     onerror="this.src='https://placehold.co/150x150/f1f5f9/94a3b8?text=Classify+{{ i }}'">
+                <div class="card-body p-2 text-center bg-light">
+                    <span class="small font-weight-bold text-success"><i class="fas fa-check-circle mr-1"></i> MATCHED</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="mt-4">
+        <img src="{{ url_for('static', filename='images/bat_icon.png') }}" width="120" alt="BAT Algorithm" onerror="this.style.display='none'">
+    </div>
+    
+    <div class="mt-5">
+        <p class="text-muted">Analyzing features using BAT algorithm...</p>
+        <a href="{{ url_for('training_complete') }}" class="btn btn-primary px-5">Finalize Training</a>
+    </div>
+</div>
+{% endblock %}

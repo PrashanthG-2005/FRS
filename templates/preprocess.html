@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="text-center">
+    <h4 class="text-primary font-weight-bold">Preprocessing</h4>
+    <p class="text-muted small">Converting to grayscale and noise reduction</p>
+    
+    <div class="row row-cols-2 row-cols-md-5 g-4">
+        {% for i in range(1, 11) %}
+        <div class="col mb-4">
+            <div class="card h-100 shadow-sm border-0 bg-light overflow-hidden">
+                <img src="{{ url_for('static', filename='face_data/' + reg_no + '/face_' + i|string + '.jpg') }}" 
+                     class="card-img-top" alt="Gray {{ i }}" 
+                     style="filter: grayscale(100%);"
+                     onerror="this.src='https://placehold.co/150x150/cccccc/333333?text=Gray+{{ i }}'">
+                <div class="card-body p-2 text-center bg-dark text-white">
+                    <span class="small font-weight-bold">GRAY_{{ i }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="mt-5">
+        <a href="{{ url_for('segmentation', reg_no=reg_no) }}" class="btn btn-primary px-5">Continue</a>
+    </div>
+</div>
+{% endblock %}

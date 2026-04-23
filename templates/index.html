@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="py-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-8">
+            <h1 class="display-4 font-weight-bold">Welcome, {{ username }}</h1>
+            <p class="lead text-muted">Face Authentication for Exam Hall Prediction System. Manage student records and verify identities with ease.</p>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="p-3 bg-white shadow-sm rounded-lg d-inline-block border">
+                <p class="mb-0 small text-muted font-weight-bold">SYSTEM STATUS</p>
+                <p class="mb-0 text-success font-weight-bold"><i class="fas fa-circle fa-xs mr-1"></i> Active & Secure</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="dashboard-grid">
+        <a href="{{ url_for('register') }}" class="card dashboard-card">
+            <i class="fas fa-user-plus"></i>
+            <h4 class="card-title">Add Student</h4>
+            <p class="text-muted small">Register new student details and capture face templates for recognition.</p>
+            <span class="btn btn-outline-primary btn-sm mt-2">Get Started</span>
+        </a>
+        
+        <a href="{{ url_for('predict') }}" class="card dashboard-card">
+            <i class="fas fa-id-card-alt"></i>
+            <h4 class="card-title">Predict Exam Hall</h4>
+            <p class="text-muted small">Use the webcam to identify students and predict their assigned exam halls.</p>
+            <span class="btn btn-outline-primary btn-sm mt-2">Open Scanner</span>
+        </a>
+        
+        <a href="{{ url_for('attendance') }}" class="card dashboard-card">
+            <i class="fas fa-clipboard-list"></i>
+            <h4 class="card-title">View Attendance</h4>
+            <p class="text-muted small">Check attendance records, logs, and student entry timestamps.</p>
+            <span class="btn btn-outline-primary btn-sm mt-2">View Logs</span>
+        </a>
+    </div>
+</div>
+{% endblock %}

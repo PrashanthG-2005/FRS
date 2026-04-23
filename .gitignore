@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+
+# Project specific
+static/face_data/
+attendance_report.csv
+
+# IDEs
+.vscode/
+.idea/

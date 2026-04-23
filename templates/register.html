@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mb-5">
+    <h2 class="font-weight-bold">Student Registration</h2>
+    <p class="text-muted">Enroll a new student into the face recognition system.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 overflow-hidden">
+            <img src="{{ url_for('static', filename='images/student_placeholder.png') }}" class="card-img-top" alt="Preview" style="height: 300px; object-fit: cover;">
+            <div class="card-body text-center bg-light">
+                <h6 class="font-weight-bold mb-1">Live Preview</h6>
+                <p class="small text-muted mb-0">Webcam will activate in the next step</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card p-5">
+            <form method="POST">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><i class="fas fa-id-badge mr-1"></i> Registration Number</label>
+                            <input type="text" name="reg_no" class="form-control" placeholder="e.g. 2024CS101" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-user mr-1"></i> Full Name</label>
+                            <input type="text" name="name" class="form-control" placeholder="e.g. John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt mr-1"></i> Address</label>
+                            <input type="text" name="address" class="form-control" placeholder="City, State">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-phone mr-1"></i> Mobile Number</label>
+                            <input type="text" name="mobile" class="form-control" placeholder="+91 00000 00000">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><i class="fas fa-envelope mr-1"></i> Email Address</label>
+                            <input type="email" name="email" class="form-control" placeholder="john@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-id-card mr-1"></i> Aadhar Number</label>
+                            <input type="text" name="aadhar" class="form-control" placeholder="0000 0000 0000">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-university mr-1"></i> Department & Year</label>
+                            <div class="row">
+                                <div class="col-7">
+                                    <input type="text" name="dept" class="form-control" placeholder="CSE">
+                                </div>
+                                <div class="col-5">
+                                    <input type="text" name="year" class="form-control" placeholder="III">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-door-open mr-1"></i> Assigned Exam Hall</label>
+                            <input type="text" name="exam_hall" class="form-control" placeholder="B-101">
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="text-right">
+                    <button type="reset" class="btn btn-outline-secondary mr-2 px-4">Clear Form</button>
+                    <button type="submit" class="btn btn-primary px-5 shadow">Continue to Face Capture <i class="fas fa-arrow-right ml-2"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row align-items-center justify-content-center" style="min-height: 80vh;">
+    <div class="col-md-5 d-none d-md-block pr-md-5">
+        <div class="position-relative">
+            <img src="{{ url_for('static', filename='images/predict_demo.png') }}" alt="Face Recognition Demo" class="img-fluid rounded-lg shadow-lg border">
+            <div class="position-absolute" style="bottom: 20px; left: 20px; right: 20px;">
+                <div class="bg-white p-3 rounded shadow-sm border">
+                    <p class="mb-0 small font-weight-bold text-primary"><i class="fas fa-shield-alt mr-2"></i> SECURE ADMIN PORTAL</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="card p-5 shadow-lg border-0" style="border-radius: 20px;">
+            <div class="text-center mb-5">
+                <div class="bg-primary text-white p-3 rounded-circle d-inline-block mb-3 shadow">
+                    <i class="fas fa-user-lock fa-2x"></i>
+                </div>
+                <h3 class="font-weight-bold">Welcome Back</h3>
+                <p class="text-muted">Enter credentials to access the dashboard</p>
+            </div>
+            <form method="POST" action="{{ url_for('login') }}">
+                <div class="form-group mb-4">
+                    <label class="small font-weight-bold text-uppercase">Username</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-light border-right-0"><i class="fas fa-user text-muted"></i></span>
+                        </div>
+                        <input type="text" name="username" class="form-control border-left-0 bg-light" placeholder="admin" required>
+                    </div>
+                </div>
+                <div class="form-group mb-5">
+                    <label class="small font-weight-bold text-uppercase">Password</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-light border-right-0"><i class="fas fa-key text-muted"></i></span>
+                        </div>
+                        <input type="password" name="password" class="form-control border-left-0 bg-light" placeholder="••••••••" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-lg shadow-sm font-weight-bold">
+                    Login to System <i class="fas fa-sign-in-alt ml-2"></i>
+                </button>
+            </form>
+        </div>
+        <p class="text-center mt-4 text-muted small">&copy; 2026 Academic Face Recognition System</p>
+    </div>
+</div>
+{% endblock %}

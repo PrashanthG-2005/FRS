@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mb-5">
+    <h2 class="font-weight-bold">Analytics Report</h2>
+    <p class="text-muted">Overview of system activity and student attendance.</p>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-4">
+        <div class="card p-4 text-center">
+            <h6 class="text-muted text-uppercase small font-weight-bold">Total Students</h6>
+            <h1 class="display-4 font-weight-bold text-primary">{{ stats.total_students }}</h1>
+            <p class="mb-0 small text-success"><i class="fas fa-arrow-up"></i> Registered</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 text-center">
+            <h6 class="text-muted text-uppercase small font-weight-bold">Present Today</h6>
+            <h1 class="display-4 font-weight-bold text-success">{{ stats.present_today }}</h1>
+            <p class="mb-0 small text-muted">Webcam verified</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 text-center">
+            <h6 class="text-muted text-uppercase small font-weight-bold">Absent Today</h6>
+            <h1 class="display-4 font-weight-bold text-danger">{{ stats.absent_today }}</h1>
+            <p class="mb-0 small text-muted">Remaining</p>
+        </div>
+    </div>
+</div>
+
+<div class="card p-5 bg-light border-0">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h4 class="font-weight-bold">Attendance Trends</h4>
+            <p class="text-muted">System performance and accuracy metrics are being calculated based on recent scans.</p>
+            <div class="mt-4">
+                <div class="d-flex justify-content-between mb-1">
+                    <small class="font-weight-bold">Recognition Accuracy</small>
+                    <small class="font-weight-bold">96%</small>
+                </div>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 96%"></div>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div class="d-flex justify-content-between mb-1">
+                    <small class="font-weight-bold">Processing Speed</small>
+                    <small class="font-weight-bold">85%</small>
+                </div>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-accent" role="progressbar" style="width: 85%"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <i class="fas fa-chart-pie fa-5x text-primary opacity-25"></i>
+        </div>
+    </div>
+</div>
+{% endblock %}

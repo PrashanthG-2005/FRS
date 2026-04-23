@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mb-5">
+    <h2 class="font-weight-bold">Edit Student Details</h2>
+    <p class="text-muted">Update information for registration number: <span class="text-primary font-weight-bold">{{ student[1] }}</span></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 overflow-hidden">
+            <img src="{{ url_for('static', filename='face_data/' + student[1] + '/face_1.jpg') }}" class="card-img-top" alt="Current Face" style="height: 300px; object-fit: cover;" onerror="this.src='{{ url_for('static', filename='images/student_placeholder.png') }}'">
+            <div class="card-body text-center bg-light">
+                <h6 class="font-weight-bold mb-1">Face Template</h6>
+                <p class="small text-muted mb-3">Registered Face Profile</p>
+                <a href="{{ url_for('add_face', reg_no=student[1]) }}" class="btn btn-outline-primary btn-sm btn-block">
+                    <i class="fas fa-camera mr-1"></i> Update Face
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card p-5">
+            <form method="POST">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><i class="fas fa-id-badge mr-1"></i> Registration Number</label>
+                            <input type="text" class="form-control bg-light" value="{{ student[1] }}" readonly disabled>
+                            <small class="text-muted">Registration number cannot be changed.</small>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-user mr-1"></i> Full Name</label>
+                            <input type="text" name="name" class="form-control" value="{{ student[2] }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt mr-1"></i> Address</label>
+                            <input type="text" name="address" class="form-control" value="{{ student[3] }}">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-phone mr-1"></i> Mobile Number</label>
+                            <input type="text" name="mobile" class="form-control" value="{{ student[4] }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><i class="fas fa-envelope mr-1"></i> Email Address</label>
+                            <input type="email" name="email" class="form-control" value="{{ student[5] }}">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-id-card mr-1"></i> Aadhar Number</label>
+                            <input type="text" name="aadhar" class="form-control" value="{{ student[6] }}">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-university mr-1"></i> Department & Year</label>
+                            <div class="row">
+                                <div class="col-7">
+                                    <input type="text" name="dept" class="form-control" value="{{ student[7] }}">
+                                </div>
+                                <div class="col-5">
+                                    <input type="text" name="year" class="form-control" value="{{ student[8] }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-door-open mr-1"></i> Assigned Exam Hall</label>
+                            <input type="text" name="exam_hall" class="form-control" value="{{ student[9] }}">
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="text-right">
+                    <a href="{{ url_for('student_list') }}" class="btn btn-outline-secondary mr-2 px-4">Cancel</a>
+                    <button type="submit" class="btn btn-primary px-5 shadow">Update Student <i class="fas fa-save ml-2"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

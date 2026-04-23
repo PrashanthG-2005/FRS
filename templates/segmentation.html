@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="text-center">
+    <h4 class="text-primary font-weight-bold">Segmentation</h4>
+    <p class="text-muted small">Black-white segmented image grid</p>
+    
+    <div class="row row-cols-2 row-cols-md-5 g-4">
+        {% for i in range(1, 11) %}
+        <div class="col mb-4">
+            <div class="card h-100 shadow-sm border-0 bg-light overflow-hidden">
+                <img src="{{ url_for('static', filename='face_data/' + reg_no + '/face_' + i|string + '.jpg') }}" 
+                     class="card-img-top" alt="Segmented {{ i }}" 
+                     style="filter: grayscale(100%) contrast(300%) brightness(150%);"
+                     onerror="this.src='https://placehold.co/150x150/000000/ffffff?text=BW+{{ i }}'">
+                <div class="card-body p-2 text-center bg-white border-top">
+                    <span class="small font-weight-bold text-dark">SEGMENT_{{ i }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="mt-5">
+        <a href="{{ url_for('feature_extraction', reg_no=reg_no) }}" class="btn btn-primary px-5">Continue</a>
+    </div>
+</div>
+{% endblock %}

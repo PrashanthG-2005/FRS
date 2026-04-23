@@ -1,0 +1,131 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mb-5">
+    <h2 class="font-weight-bold">Exam Hall Prediction</h2>
+    <p class="text-muted">Real-time facial recognition and hall assignment.</p>
+</div>
+
+<div class="prediction-panel">
+    <div class="row w-100 align-items-center">
+        <div class="col-md-6 text-center">
+            <div class="prediction-image d-inline-block p-1 bg-dark rounded shadow-lg" style="position: relative; min-width: 400px; min-height: 300px;">
+                <img id="video-feed" src="{{ url_for('video_feed') }}" class="img-fluid rounded" alt="Live Feed" style="max-height: 400px; width: 100%;">
+                <div class="scan-line"></div>
+                <div id="face-marker" style="position: absolute; top: 20%; left: 30%; width: 40%; height: 50%; border: 2px solid var(--accent); box-shadow: 0 0 10px var(--accent); border-radius: 4px; display: none;"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="prediction-card ml-lg-auto">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-primary-hover p-2 rounded-circle mr-3">
+                        <i class="fas fa-fingerprint text-white"></i>
+                    </div>
+                    <h5 class="font-weight-bold mb-0">System Analysis</h5>
+                </div>
+                
+                <div id="result-content" style="display: none;">
+                    <div class="text-center mb-4">
+                        <img id="student-img" src="{{ url_for('static', filename='images/student_placeholder.png') }}" class="border-accent border rounded-circle shadow-sm" alt="Student" width="120" height="120" style="object-fit: cover;">
+                    </div>
+                    
+                    <div class="px-2">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted small font-weight-bold">STUDENT NAME</span>
+                            <span id="student-name" class="font-weight-bold">Scanning...</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted small font-weight-bold">STATUS</span>
+                            <span class="text-accent font-weight-bold"><i class="fas fa-check-circle mr-1"></i> Authorized</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted small font-weight-bold">SAFETY CHECK</span>
+                            <span class="text-danger small font-weight-bold"><i class="fas fa-exclamation-triangle mr-1"></i> Mask Not Worn</span>
+                        </div>
+                        
+                        <div class="my-4">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small class="text-muted">Match Confidence</small>
+                                <small id="confidence" class="font-weight-bold text-accent">0%</small>
+                            </div>
+                            <div class="progress bg-dark" style="height: 6px;">
+                                <div id="confidence-bar" class="progress-bar bg-accent" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-primary p-3 rounded text-center mt-4">
+                            <small class="text-white-50 d-block text-uppercase font-weight-bold mb-1">Assigned Exam Hall</small>
+                            <h3 id="exam-hall" class="font-weight-bold text-white mb-0">---</h3>
+                        </div>
+
+                        <div id="action-buttons" class="mt-4" style="display: none;">
+                            <button id="ok-btn" class="btn btn-accent btn-block shadow text-white font-weight-bold py-3" style="border-radius: 12px; font-size: 1.1rem;">
+                                <i class="fas fa-check-circle mr-2"></i> Confirm & Next Student
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="scanning-msg" class="text-center py-5">
+                    <i class="fas fa-sync fa-spin fa-3x text-primary mb-3 opacity-50"></i>
+                    <p class="text-muted">Align face within the scanner to begin identification...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-5">
+    <button onclick="window.location.reload()" class="btn btn-outline-primary px-5 mr-3"><i class="fas fa-redo mr-2"></i> Reset Scanner</button>
+    <a href="{{ url_for('home') }}" class="btn btn-primary px-5 shadow"><i class="fas fa-home mr-2"></i> Back to Dashboard</a>
+</div>
+
+<script>
+    let isPaused = false;
+    let pollInterval = null;
+
+    function updatePrediction() {
+        if (isPaused) return;
+
+        fetch('/get_prediction')
+            .then(response => response.json())
+            .then(data => {
+                if (data.detected) {
+                    // Pause scanning
+                    isPaused = true;
+                    
+                    document.getElementById('result-content').style.display = 'block';
+                    document.getElementById('scanning-msg').style.display = 'none';
+                    document.getElementById('face-marker').style.display = 'block';
+                    document.getElementById('action-buttons').style.display = 'block';
+                    
+                    document.getElementById('student-name').innerText = data.name;
+                    document.getElementById('confidence').innerText = data.confidence + '%';
+                    document.getElementById('confidence-bar').style.width = data.confidence + '%';
+                    document.getElementById('exam-hall').innerText = data.exam_hall;
+                    
+                    if (data.image) {
+                        document.getElementById('student-img').src = data.image;
+                    }
+                }
+            })
+            .catch(err => console.error('Error fetching prediction:', err));
+    }
+
+    document.getElementById('ok-btn').addEventListener('click', function() {
+        // Reset UI
+        document.getElementById('result-content').style.display = 'none';
+        document.getElementById('scanning-msg').style.display = 'block';
+        document.getElementById('face-marker').style.display = 'none';
+        document.getElementById('action-buttons').style.display = 'none';
+        
+        // Resume scanning after a short delay
+        setTimeout(() => {
+            isPaused = false;
+        }, 1000);
+    });
+
+    // Start polling
+    pollInterval = setInterval(updatePrediction, 1000);
+</script>
+{% endblock %}
