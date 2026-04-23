@@ -39,14 +39,12 @@ A full-stack Flask application for student enrollment, biometric face template c
    - Run the SQL commands in `schema.sql` to create the required tables.
 
 5. **Setup Environment Variables**
-   Create a `.env` file in the root directory:
-   ```env
-   MYSQL_HOST=localhost
-   MYSQL_USER=your_username
-   MYSQL_PASSWORD=your_password
-   MYSQL_DB=face_recognition
-   SECRET_KEY=your_secret_key
+   Copy the example environment file and fill in your details:
+   ```bash
+   cp .env.example .env  # On Windows: copy .env.example .env
    ```
+   Edit the `.env` file with your MySQL credentials and a secret key.
+
 
 ## Running the Application
 
